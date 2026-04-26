@@ -202,7 +202,7 @@ function MD({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
-function CTABig({ id }: { id?: string }) {
+function CTABig({ id, dark = false }: { id?: string; dark?: boolean }) {
   return (
     <div id={id} className="text-center">
       <a
@@ -212,7 +212,7 @@ function CTABig({ id }: { id?: string }) {
         MI ISCRIVO ORA
         <span className="transition-transform group-hover:translate-x-1">→</span>
       </a>
-      <p className="mt-4 text-sm text-ink/70">
+      <p className={`mt-4 text-sm ${dark ? "text-paper/70" : "text-ink/70"}`}>
         🔴 La Masterclass è Live e totalmente Gratuita, il{" "}
         <strong>27 Aprile</strong> alle ore <strong>21:00</strong>.
       </p>
@@ -230,19 +230,19 @@ function StudentVideo({ src }: { src: string }) {
   };
 
   return (
-    <div className="relative rounded-2xl overflow-hidden border-2 border-ink bg-ink">
+    <div className="relative rounded-2xl overflow-hidden border-2 border-ink bg-ink/5">
       <video
         ref={ref}
         src={src}
         className="w-full h-auto block"
-        preload="none"
+        preload="metadata"
         playsInline
         controls={playing}
       />
       {!playing && (
         <button
           onClick={handlePlay}
-          className="absolute inset-0 flex items-center justify-center bg-ink/40 hover:bg-ink/20 transition-colors"
+          className="absolute inset-0 flex items-center justify-center bg-ink/20 hover:bg-ink/10 transition-colors cursor-pointer"
           aria-label="Riproduci video"
         >
           <div className="h-16 w-16 rounded-full bg-paper/90 flex items-center justify-center shadow-bold">
@@ -257,6 +257,21 @@ function StudentVideo({ src }: { src: string }) {
 }
 
 function MailerLiteForm() {
+  const [formError, setFormError] = useState("");
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const name = nameRef.current?.value.trim() ?? "";
+    const email = emailRef.current?.value.trim() ?? "";
+    if (!name || !email) {
+      e.preventDefault();
+      setFormError("Devi compilare tutti i campi prima di procedere.");
+      return;
+    }
+    setFormError("");
+  };
+
   useEffect(() => {
     (window as any).ml_webform_success_39435775 = function () {
       try {
@@ -293,17 +308,20 @@ function MailerLiteForm() {
               data-code=""
               method="post"
               target="_blank"
+              onSubmit={handleSubmit}
             >
               <div className="ml-form-formContent space-y-4">
                 <div className="ml-form-fieldRow">
                   <div className="ml-field-group ml-field-name ml-validate-required">
                     <input
+                      ref={nameRef}
                       aria-label="name"
                       aria-required="true"
                       type="text"
                       name="fields[name]"
                       placeholder="Inserisci il tuo NOME"
                       autoComplete="given-name"
+                      onChange={() => setFormError("")}
                       className="w-full rounded-xl border-2 border-ink/20 bg-cream px-4 py-3 text-base text-ink placeholder:text-ink/50 focus:outline-none focus:border-teal transition-colors"
                     />
                   </div>
@@ -311,12 +329,14 @@ function MailerLiteForm() {
                 <div className="ml-form-fieldRow ml-last-item">
                   <div className="ml-field-group ml-field-email ml-validate-email ml-validate-required">
                     <input
+                      ref={emailRef}
                       aria-label="email"
                       aria-required="true"
                       type="email"
                       name="fields[email]"
                       placeholder="Inserisci la tua MIGLIOR EMAIL"
                       autoComplete="email"
+                      onChange={() => setFormError("")}
                       className="w-full rounded-xl border-2 border-ink/20 bg-cream px-4 py-3 text-base text-ink placeholder:text-ink/50 focus:outline-none focus:border-teal transition-colors"
                     />
                   </div>
@@ -347,10 +367,16 @@ function MailerLiteForm() {
 
               <input type="hidden" name="ml-submit" value="1" />
 
+              {formError && (
+                <p className="mt-4 text-sm font-semibold text-red-500 text-center">
+                  {formError}
+                </p>
+              )}
+
               <div className="ml-form-embedSubmit mt-5">
                 <button
                   type="submit"
-                  className="primary group w-full inline-flex items-center justify-center gap-3 rounded-full bg-teal text-paper px-8 py-5 text-base font-bold tracking-wide hover:opacity-90 transition-all"
+                  className="primary group w-full inline-flex items-center justify-center gap-3 rounded-full bg-teal text-paper px-8 py-5 text-base font-bold tracking-wide hover:opacity-90 transition-all cursor-pointer"
                 >
                   VOGLIO ISCRIVERMI
                   <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -373,6 +399,50 @@ function MailerLiteForm() {
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function HeroVideo() {
+  const [muted, setMuted] = useState(true);
+  const ref = useRef<HTMLVideoElement>(null);
+
+  const toggleMute = () => {
+    if (ref.current) {
+      ref.current.muted = !muted;
+      setMuted(!muted);
+    }
+  };
+
+  return (
+    <div className="relative">
+      <div className="absolute -inset-6 bg-gradient-to-br from-gold/30 to-teal/30 rounded-3xl blur-2xl" />
+      <div className="relative rounded-3xl overflow-hidden border-2 border-paper/10 bg-paper/5 backdrop-blur">
+        <video
+          ref={ref}
+          src={HERO_VIDEO}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-auto block"
+        />
+        <button
+          onClick={toggleMute}
+          className="absolute bottom-4 right-4 h-11 w-11 rounded-full bg-ink/70 hover:bg-ink flex items-center justify-center transition-colors cursor-pointer"
+          aria-label={muted ? "Attiva audio" : "Disattiva audio"}
+        >
+          {muted ? (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-paper">
+              <path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z" />
+            </svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-paper">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+            </svg>
+          )}
+        </button>
       </div>
     </div>
   );
@@ -450,19 +520,7 @@ function MappaPage() {
             </div>
 
             <div className="lg:col-span-5">
-              <div className="relative">
-                <div className="absolute -inset-6 bg-gradient-to-br from-gold/30 to-teal/30 rounded-3xl blur-2xl" />
-                <div className="relative rounded-3xl overflow-hidden border-2 border-paper/10 bg-paper/5 backdrop-blur">
-                  <video
-                    src={HERO_VIDEO}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="w-full h-auto block"
-                  />
-                </div>
-              </div>
+              <HeroVideo />
             </div>
           </div>
         </div>
@@ -705,7 +763,7 @@ function MappaPage() {
           </div>
 
           <div className="mt-16">
-            <CTABig />
+            <CTABig dark />
           </div>
         </div>
       </section>
@@ -941,7 +999,7 @@ function MappaPage() {
                 </p>
               </div>
               <div className="mt-10">
-                <CTABig />
+                <CTABig dark />
               </div>
             </div>
           </div>
