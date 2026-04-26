@@ -22,8 +22,14 @@ function diff(target: Date) {
 
 type Variant = "compact" | "large";
 
-export function Countdown({ variant = "compact" }: { variant?: Variant }) {
-  const [target] = useState(getTargetDate);
+export function Countdown({
+  variant = "compact",
+  targetDate,
+}: {
+  variant?: Variant;
+  targetDate?: Date;
+}) {
+  const [target] = useState(() => targetDate ?? getTargetDate());
   const [time, setTime] = useState(() => diff(target));
 
   useEffect(() => {

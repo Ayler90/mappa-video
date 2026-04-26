@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as IscrivitiLaMappaVideoRouteImport } from './routes/iscriviti-la-mappa-video'
 import { Route as IndexRouteImport } from './routes/index'
 
+const IscrivitiLaMappaVideoRoute = IscrivitiLaMappaVideoRouteImport.update({
+  id: '/iscriviti-la-mappa-video',
+  path: '/iscriviti-la-mappa-video',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +25,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/iscriviti-la-mappa-video': typeof IscrivitiLaMappaVideoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/iscriviti-la-mappa-video': typeof IscrivitiLaMappaVideoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/iscriviti-la-mappa-video': typeof IscrivitiLaMappaVideoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/iscriviti-la-mappa-video'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/iscriviti-la-mappa-video'
+  id: '__root__' | '/' | '/iscriviti-la-mappa-video'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  IscrivitiLaMappaVideoRoute: typeof IscrivitiLaMappaVideoRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/iscriviti-la-mappa-video': {
+      id: '/iscriviti-la-mappa-video'
+      path: '/iscriviti-la-mappa-video'
+      fullPath: '/iscriviti-la-mappa-video'
+      preLoaderRoute: typeof IscrivitiLaMappaVideoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  IscrivitiLaMappaVideoRoute: IscrivitiLaMappaVideoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
