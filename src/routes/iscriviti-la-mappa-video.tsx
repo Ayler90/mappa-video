@@ -233,7 +233,7 @@ function StudentVideo({ src }: { src: string }) {
     <div className="relative rounded-2xl overflow-hidden border-2 border-ink bg-ink/5">
       <video
         ref={ref}
-        src={src}
+        src={`${src}#t=0.001`}
         className="w-full h-auto block"
         preload="metadata"
         playsInline
@@ -486,7 +486,7 @@ function MappaPage() {
                 <span className="text-paper/50">•</span> 27 Aprile · 21:00
               </div>
 
-              <h1 className="mt-8 text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.95] tracking-tight text-balance">
+              <h1 className="mt-8 text-[2rem] xs:text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-black leading-[1.05] tracking-tight text-balance">
                 Le regole per crescere e vendere con i{" "}
                 <span className="text-gold">video sui social</span> sono{" "}
                 <em className="not-italic underline decoration-gold decoration-[6px] underline-offset-4">cambiate</em>.
