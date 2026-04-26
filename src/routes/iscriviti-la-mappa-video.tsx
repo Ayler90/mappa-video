@@ -3,27 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import { Countdown } from "@/components/site/Countdown";
 
 export const Route = createFileRoute("/iscriviti-la-mappa-video")({
-  head: () => ({
-    meta: [
-      { title: "La Mappa dei Video — Masterclass LIVE Gratuita | Gionsnow" },
-      {
-        name: "description",
-        content:
-          "27 Aprile ore 21:00. Masterclass live e gratuita: la mappa concreta per creare video che costruiscono identità, crescono e convertono nel 2026.",
-      },
-      { property: "og:title", content: "La Mappa dei Video — Masterclass LIVE Gratuita" },
-      {
-        property: "og:description",
-        content:
-          "Le regole per crescere e vendere con i video sui social sono cambiate. Scopri come adattarti nel 2026.",
-      },
-      {
-        property: "og:image",
-        content:
-          "https://d1yei2z3i6k35z.cloudfront.net/7515914/69d119a0c005e0.76001406_Gemini_Generated_Image_jwvncljwvncljwvn1.png",
-      },
-    ],
-  }),
   component: MappaPage,
 });
 
