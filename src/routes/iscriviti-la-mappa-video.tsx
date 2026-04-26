@@ -231,6 +231,13 @@ function StudentVideo({ src }: { src: string }) {
     video.play().catch(() => {/* ignore policy errors */});
   };
 
+  const handleLoadedMetadata = () => {
+    const video = ref.current;
+    if (!video || video.currentTime > 0) return;
+    // Force iOS Safari to paint the first frame without using #t=0.001 URL fragment
+    video.currentTime = 0.001;
+  };
+
   return (
     <div className="relative rounded-2xl overflow-hidden border-2 border-ink bg-ink/5">
       <video
@@ -240,6 +247,7 @@ function StudentVideo({ src }: { src: string }) {
         preload="metadata"
         playsInline
         controls
+        onLoadedMetadata={handleLoadedMetadata}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
       />
