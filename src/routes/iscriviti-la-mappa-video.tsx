@@ -20,8 +20,9 @@ function getEventDate() {
 const LOGO =
   "https://d1yei2z3i6k35z.cloudfront.net/7515914/69cbe44808e441.54940797_02_LOGO_GionSnow_Negativo-2048x3561.png";
 
-const HERO_VIDEO =
-  "https://d1yei2z3i6k35z.cloudfront.net/7515914/69edc8630db710.51412199_SonoaperteleiscrizioniaLaMappadeiVideo️Lamianuovamasterclassonlinetotalmentegr.mp4";
+const HERO_VIDEO = encodeURI(
+  "https://d1yei2z3i6k35z.cloudfront.net/7515914/69edc8630db710.51412199_SonoaperteleiscrizioniaLaMappadeiVideo️Lamianuovamasterclassonlinetotalmentegr.mp4"
+);
 const PROBLEM_IMG =
   "https://d1yei2z3i6k35z.cloudfront.net/7515914/69d0c145772429.71141604_Immagini1080135036.png";
 const MAP_IMG =
@@ -225,19 +226,22 @@ function StudentVideo({ src }: { src: string }) {
   const ref = useRef<HTMLVideoElement>(null);
 
   const handlePlay = () => {
-    setPlaying(true);
-    ref.current?.play();
+    const video = ref.current;
+    if (!video) return;
+    video.play().catch(() => {/* ignore policy errors */});
   };
 
   return (
     <div className="relative rounded-2xl overflow-hidden border-2 border-ink bg-ink/5">
       <video
         ref={ref}
-        src={`${src}#t=0.001`}
+        src={src}
         className="w-full h-auto block"
         preload="metadata"
         playsInline
-        controls={playing}
+        controls
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
       />
       {!playing && (
         <button
@@ -418,7 +422,7 @@ function HeroVideo() {
   return (
     <div className="relative">
       <div className="absolute -inset-6 bg-gradient-to-br from-gold/30 to-teal/30 rounded-3xl blur-2xl" />
-      <div className="relative rounded-3xl overflow-hidden border-2 border-paper/10 bg-paper/5 backdrop-blur">
+      <div className="relative rounded-3xl overflow-hidden border-2 border-paper/10 bg-paper/5 backdrop-blur" style={{ transform: "translateZ(0)", WebkitTransform: "translateZ(0)" }}>
         <video
           ref={ref}
           src={HERO_VIDEO}
@@ -480,10 +484,11 @@ function MappaPage() {
         <div className="relative mx-auto max-w-7xl px-5 lg:px-8 pt-16 lg:pt-24 pb-20 lg:pb-32">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-paper/20 bg-paper/5 px-4 py-2 text-xs uppercase tracking-[0.25em] text-paper/80">
-                <span className="h-2 w-2 rounded-full bg-red-500 animate-blink" />
-                Evento <strong className="text-paper">LIVE</strong> & <strong className="text-gold">GRATUITO</strong>
-                <span className="text-paper/50">•</span> 27 Aprile · 21:00
+              <div className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-paper/20 bg-paper/5 px-4 py-2 text-xs uppercase tracking-[0.2em] text-paper/80 max-w-full">
+                <span className="h-2 w-2 rounded-full bg-red-500 animate-blink shrink-0" />
+                <span className="whitespace-nowrap">Evento <strong className="text-paper">LIVE</strong> & <strong className="text-gold">GRATUITO</strong></span>
+                <span className="text-paper/50">•</span>
+                <span className="whitespace-nowrap">27 Aprile · 21:00</span>
               </div>
 
               <h1 className="mt-8 text-[2rem] xs:text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-black leading-[1.05] tracking-tight text-balance">
