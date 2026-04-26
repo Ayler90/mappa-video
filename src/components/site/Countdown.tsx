@@ -25,9 +25,11 @@ type Variant = "compact" | "large";
 export function Countdown({
   variant = "compact",
   targetDate,
+  dark = false,
 }: {
   variant?: Variant;
   targetDate?: Date;
+  dark?: boolean;
 }) {
   const [target] = useState(() => targetDate ?? getTargetDate());
   const [time, setTime] = useState(() => diff(target));
@@ -50,10 +52,10 @@ export function Countdown({
         {items.map((it, i) => (
           <div key={it.l} className="flex items-center gap-3 sm:gap-6">
             <div className="flex flex-col items-center">
-              <span className="font-display text-5xl sm:text-7xl font-black tabular-nums text-ink leading-none">
+              <span className={`font-display text-5xl sm:text-7xl font-black tabular-nums leading-none ${dark ? "text-paper" : "text-ink"}`}>
                 {String(it.v).padStart(2, "0")}
               </span>
-              <span className="mt-2 text-[10px] sm:text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              <span className={`mt-2 text-[10px] sm:text-xs uppercase tracking-[0.2em] ${dark ? "text-paper/60" : "text-muted-foreground"}`}>
                 {it.l}
               </span>
             </div>
@@ -70,11 +72,11 @@ export function Countdown({
     <div className="flex items-center gap-2 font-mono text-xs sm:text-sm tabular-nums">
       {items.map((it, i) => (
         <span key={it.l} className="flex items-baseline gap-1">
-          <span className="font-bold text-ink">{String(it.v).padStart(2, "0")}</span>
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+          <span className={`font-bold ${dark ? "text-paper" : "text-ink"}`}>{String(it.v).padStart(2, "0")}</span>
+          <span className={`text-[10px] uppercase tracking-wider ${dark ? "text-paper/60" : "text-muted-foreground"}`}>
             {it.l.slice(0, 1)}
           </span>
-          {i < items.length - 1 && <span className="text-muted-foreground">:</span>}
+          {i < items.length - 1 && <span className={dark ? "text-paper/60" : "text-muted-foreground"}>:</span>}
         </span>
       ))}
     </div>

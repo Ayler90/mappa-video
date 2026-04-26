@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Countdown } from "@/components/site/Countdown";
 
 export const Route = createFileRoute("/iscriviti-la-mappa-video")({
@@ -41,8 +41,8 @@ function getEventDate() {
 const LOGO =
   "https://d1yei2z3i6k35z.cloudfront.net/7515914/69cbe44808e441.54940797_02_LOGO_GionSnow_Negativo-2048x3561.png";
 
-const HERO_IMG =
-  "https://d1yei2z3i6k35z.cloudfront.net/7515914/69d1132cf046c3.03001136_Gemini_Generated_Image_hl0l7shl0l7shl0l.png";
+const HERO_VIDEO =
+  "https://d1yei2z3i6k35z.cloudfront.net/7515914/69edc8630db710.51412199_SonoaperteleiscrizioniaLaMappadeiVideo️Lamianuovamasterclassonlinetotalmentegr.mp4";
 const PROBLEM_IMG =
   "https://d1yei2z3i6k35z.cloudfront.net/7515914/69d0c145772429.71141604_Immagini1080135036.png";
 const MAP_IMG =
@@ -51,6 +51,16 @@ const ME_IMG =
   "https://d1yei2z3i6k35z.cloudfront.net/7515914/699221821d19e_1.png";
 const FABBRICA_IMG =
   "https://d1yei2z3i6k35z.cloudfront.net/7515914/69922160476d9_3.png";
+
+const STUDENT_VIDEOS = [
+  "https://andreabonomo.it/wp-content/uploads/2024/05/Letture.mp4",
+  "https://andreabonomo.it/wp-content/uploads/2024/05/Marsupio.mp4",
+  "https://andreabonomo.it/wp-content/uploads/2024/05/Milan.mp4",
+  "https://andreabonomo.it/wp-content/uploads/2024/05/Montagna.mp4",
+  "https://andreabonomo.it/wp-content/uploads/2024/05/Anteprima.mp4",
+  "https://andreabonomo.it/wp-content/uploads/2024/05/Chi-siamo.mp4",
+  "https://andreabonomo.it/wp-content/uploads/2024/05/Portamento.mp4",
+];
 
 const REVIEWS = [
   "69d113ae49fc52.89979943_IMG_1893.jpg",
@@ -196,13 +206,13 @@ const FAQ = [
 ];
 
 // Inline markdown bold renderer
-function MD({ text }: { text: string }) {
+function MD({ text, dark = false }: { text: string; dark?: boolean }) {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   return (
     <>
       {parts.map((p, i) =>
         p.startsWith("**") && p.endsWith("**") ? (
-          <strong key={i} className="font-bold text-ink">
+          <strong key={i} className={`font-bold ${dark ? "text-paper" : "text-ink"}`}>
             {p.slice(2, -2)}
           </strong>
         ) : (
@@ -231,10 +241,166 @@ function CTABig({ id }: { id?: string }) {
   );
 }
 
+function StudentVideo({ src }: { src: string }) {
+  const [playing, setPlaying] = useState(false);
+  const ref = useRef<HTMLVideoElement>(null);
+
+  const handlePlay = () => {
+    setPlaying(true);
+    ref.current?.play();
+  };
+
+  return (
+    <div className="relative rounded-2xl overflow-hidden border-2 border-ink bg-ink">
+      <video
+        ref={ref}
+        src={src}
+        className="w-full h-auto block"
+        preload="none"
+        playsInline
+        controls={playing}
+      />
+      {!playing && (
+        <button
+          onClick={handlePlay}
+          className="absolute inset-0 flex items-center justify-center bg-ink/40 hover:bg-ink/20 transition-colors"
+          aria-label="Riproduci video"
+        >
+          <div className="h-16 w-16 rounded-full bg-paper/90 flex items-center justify-center shadow-bold">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-ink ml-1">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+        </button>
+      )}
+    </div>
+  );
+}
+
+function MailerLiteForm() {
+  useEffect(() => {
+    (window as any).ml_webform_success_39435775 = function () {
+      try {
+        window.top!.location.href =
+          "https://fabbricadivideo.gionsnow.it/prenotato-posto-mappa-video";
+      } catch (e) {
+        window.location.href =
+          "https://fabbricadivideo.gionsnow.it/prenotato-posto-mappa-video";
+      }
+    };
+    if (!document.getElementById("ml-webforms-39435775-script")) {
+      const s = document.createElement("script");
+      s.id = "ml-webforms-39435775-script";
+      s.src =
+        "https://groot.mailerlite.com/js/w/webforms.min.js?vb397d78ebaa8a0f631d35384c46d781b";
+      document.body.appendChild(s);
+      fetch(
+        "https://assets.mailerlite.com/jsonp/43107/forms/183810396764767342/takel"
+      );
+    }
+  }, []);
+
+  return (
+    <div
+      id="mlb2-39435775"
+      className="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-39435775"
+    >
+      <div className="ml-form-align-center">
+        <div className="ml-form-embedWrapper embedForm">
+          <div className="ml-form-embedBody ml-form-embedBodyDefault row-form">
+            <form
+              className="ml-block-form"
+              action="https://assets.mailerlite.com/jsonp/43107/forms/183810396764767342/subscribe"
+              data-code=""
+              method="post"
+              target="_blank"
+            >
+              <div className="ml-form-formContent space-y-4">
+                <div className="ml-form-fieldRow">
+                  <div className="ml-field-group ml-field-name ml-validate-required">
+                    <input
+                      aria-label="name"
+                      aria-required="true"
+                      type="text"
+                      name="fields[name]"
+                      placeholder="Inserisci il tuo NOME"
+                      autoComplete="given-name"
+                      className="w-full rounded-xl border-2 border-ink/20 bg-cream px-4 py-3 text-base text-ink placeholder:text-ink/50 focus:outline-none focus:border-teal transition-colors"
+                    />
+                  </div>
+                </div>
+                <div className="ml-form-fieldRow ml-last-item">
+                  <div className="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                    <input
+                      aria-label="email"
+                      aria-required="true"
+                      type="email"
+                      name="fields[email]"
+                      placeholder="Inserisci la tua MIGLIOR EMAIL"
+                      autoComplete="email"
+                      className="w-full rounded-xl border-2 border-ink/20 bg-cream px-4 py-3 text-base text-ink placeholder:text-ink/50 focus:outline-none focus:border-teal transition-colors"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="ml-form-checkboxRow ml-validate-required mt-5">
+                <label className="checkbox flex items-start gap-3 text-sm text-ink/75 cursor-pointer">
+                  <input type="checkbox" className="mt-1 h-4 w-4 accent-teal shrink-0" />
+                  <div className="label-description">
+                    <p>Accetto di ricevere aggiornamenti relativi all'evento Live*</p>
+                  </div>
+                </label>
+              </div>
+
+              <p className="mt-4 text-xs text-ink/50 text-center">
+                Puoi disiscriverti quando vuoi. Cliccando sul pulsante qui sotto, accetti la{" "}
+                <a
+                  href="https://www.iubenda.com/privacy-policy/54965772"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline hover:text-teal"
+                >
+                  Privacy Policy
+                </a>{" "}
+                del sito.
+              </p>
+
+              <input type="hidden" name="ml-submit" value="1" />
+
+              <div className="ml-form-embedSubmit mt-5">
+                <button
+                  type="submit"
+                  className="primary group w-full inline-flex items-center justify-center gap-3 rounded-full bg-teal text-paper px-8 py-5 text-base font-bold tracking-wide hover:opacity-90 transition-all"
+                >
+                  VOGLIO ISCRIVERMI
+                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                </button>
+                <button disabled type="button" className="loading hidden">
+                  <span className="sr-only">Loading...</span>
+                </button>
+              </div>
+
+              <input type="hidden" name="anticsrf" value="true" />
+            </form>
+          </div>
+          <div className="ml-form-successBody row-success hidden">
+            <div className="ml-form-successContent text-center py-8">
+              <div className="text-5xl mb-4">🎉</div>
+              <h4 className="text-2xl font-bold text-ink">Grazie!</h4>
+              <p className="mt-3 text-ink/75">
+                Ti sei iscritto/a con successo. Ci vediamo il 27 Aprile alle 21:00!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function MappaPage() {
   const eventDate = getEventDate();
-  const [submitted, setSubmitted] = useState(false);
-  const [consent, setConsent] = useState(false);
 
   return (
     <div className="min-h-screen bg-ink text-paper font-sans" style={{ fontFamily: "'Lexend', ui-sans-serif, system-ui, sans-serif" }}>
@@ -245,9 +411,7 @@ function MappaPage() {
             <img src={LOGO} alt="Gionsnow" className="h-10 w-auto" />
           </a>
           <div className="hidden md:block">
-            <div className="flex items-center gap-2 font-mono text-xs sm:text-sm tabular-nums text-paper">
-              <Countdown targetDate={eventDate} />
-            </div>
+            <Countdown targetDate={eventDate} dark />
           </div>
           <a
             href="#form"
@@ -286,7 +450,7 @@ function MappaPage() {
               </p>
 
               <div className="mt-10">
-                <Countdown targetDate={eventDate} variant="large" />
+                <Countdown targetDate={eventDate} variant="large" dark />
               </div>
 
               <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -310,7 +474,14 @@ function MappaPage() {
               <div className="relative">
                 <div className="absolute -inset-6 bg-gradient-to-br from-gold/30 to-teal/30 rounded-3xl blur-2xl" />
                 <div className="relative rounded-3xl overflow-hidden border-2 border-paper/10 bg-paper/5 backdrop-blur">
-                  <img src={HERO_IMG} alt="La Mappa dei Video" className="w-full h-auto" loading="eager" />
+                  <video
+                    src={HERO_VIDEO}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-auto block"
+                  />
                 </div>
               </div>
             </div>
@@ -340,6 +511,29 @@ function MappaPage() {
                 ))}
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FORM */}
+      <section id="form" className="bg-paper text-ink py-24 lg:py-32">
+        <div className="mx-auto max-w-3xl px-5 lg:px-8 text-center">
+          <p className="text-xs uppercase tracking-[0.3em] font-bold text-teal flex items-center justify-center gap-3">
+            <span className="h-2 w-2 rounded-full bg-red-500 animate-blink" />
+            Iscrizioni aperte
+          </p>
+          <h2 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-balance">
+            Prenota il tuo posto alla{" "}
+            <span className="text-teal">masterclass gratuita</span>.
+          </h2>
+          <p className="mt-6 text-lg text-ink/75">
+            Le iscrizioni chiudono tra pochi giorni.
+          </p>
+          <div className="mt-10">
+            <Countdown targetDate={eventDate} variant="large" />
+          </div>
+          <div className="mt-12 rounded-3xl bg-cream p-8 lg:p-10 border-2 border-ink text-left">
+            <MailerLiteForm />
           </div>
         </div>
       </section>
@@ -563,7 +757,7 @@ function MappaPage() {
       </section>
 
       {/* AUTHOR */}
-      <section className="bg-cream text-ink py-24 lg:py-32">
+      <section className="bg-ink text-paper py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5">
@@ -572,47 +766,47 @@ function MappaPage() {
                 <img
                   src={ME_IMG}
                   alt="Marialaura — Gionsnow"
-                  className="relative rounded-3xl border-2 border-ink w-full"
+                  className="relative rounded-3xl border-2 border-paper/20 w-full"
                   loading="lazy"
                 />
               </div>
             </div>
             <div className="lg:col-span-7">
-              <p className="text-xs uppercase tracking-[0.3em] font-bold text-muted-foreground">
+              <p className="text-xs uppercase tracking-[0.3em] font-bold text-paper/60">
                 Ciao, sono Marialaura
               </p>
               <h2 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
                 ma forse mi conosci come <span className="text-teal">Gionsnow</span>
               </h2>
-              <div className="mt-8 space-y-5 text-lg leading-relaxed text-ink/85">
+              <div className="mt-8 space-y-5 text-lg leading-relaxed text-paper/85">
                 <p>
-                  Da <strong>oltre 10 anni</strong> sono video maker, content creator e insegnante.
+                  Da <strong className="text-paper">oltre 10 anni</strong> sono video maker, content creator e insegnante.
                 </p>
                 <p>
-                  La mia mission è <strong>guidare Small Business, Personal Brand</strong> e{" "}
-                  <strong>Aziende</strong> nella creazione dei loro <strong>contenuti video</strong>,
+                  La mia mission è <strong className="text-paper">guidare Small Business, Personal Brand</strong> e{" "}
+                  <strong className="text-paper">Aziende</strong> nella creazione dei loro <strong className="text-paper">contenuti video</strong>,
                   in prima persona o affiancandoli, divulgare informazioni utili sulla creazione
                   contenuti, sul video making e sul cinema, con un linguaggio semplice ma non banale,
                   alla portata di tutti.
                 </p>
                 <p>
-                  In questi anni ho affiancato <strong>oltre 500 studenti</strong> e{" "}
-                  <strong>clienti</strong> nella creazione dei loro contenuti video.
+                  In questi anni ho affiancato <strong className="text-paper">oltre 500 studenti</strong> e{" "}
+                  <strong className="text-paper">clienti</strong> nella creazione dei loro contenuti video.
                 </p>
                 <p>
-                  Ho collaborato con <strong>XFactor 13</strong>,{" "}
-                  <strong>The Jackal a Sanremo 2024</strong>, sono insegnante presso il{" "}
-                  <strong>Politecnico di Milano</strong>, speaker per{" "}
-                  <strong>Cavalieri Digitali</strong> e sono stata invitata, insieme a 50 creator del
+                  Ho collaborato con <strong className="text-paper">XFactor 13</strong>,{" "}
+                  <strong className="text-paper">The Jackal a Sanremo 2024</strong>, sono insegnante presso il{" "}
+                  <strong className="text-paper">Politecnico di Milano</strong>, speaker per{" "}
+                  <strong className="text-paper">Cavalieri Digitali</strong> e sono stata invitata, insieme a 50 creator del
                   settore cinematografico, all'evento{" "}
-                  <strong>Oscar Party di I Wonder Pictures</strong>.
+                  <strong className="text-paper">Oscar Party di I Wonder Pictures</strong>.
                 </p>
               </div>
             </div>
           </div>
 
           {/* Logo marquee */}
-          <div className="mt-20 overflow-hidden border-y-2 border-ink py-8">
+          <div className="mt-20 overflow-hidden border-y-2 border-paper/20 py-8">
             <div className="marquee items-center">
               {[...LOGOS, ...LOGOS].map((src, i) => (
                 <img
@@ -672,7 +866,7 @@ function MappaPage() {
                       ✕
                     </span>
                     <p>
-                      <MD text={t} />
+                      <MD text={t} dark />
                     </p>
                   </li>
                 ))}
@@ -708,6 +902,11 @@ function MappaPage() {
               Alla fine dell'ora e mezza saprai creare un video che converte, saprai costruire il tuo
               format e saprai usare l'AI per accelerare il processo senza perdere la tua voce.
             </p>
+          </div>
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
+            {STUDENT_VIDEOS.map((src, i) => (
+              <StudentVideo key={i} src={src} />
+            ))}
           </div>
         </div>
       </section>
@@ -794,101 +993,6 @@ function MappaPage() {
               </details>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* FORM */}
-      <section id="form" className="bg-ink text-paper py-24 lg:py-32 relative overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 h-[600px] w-[600px] rounded-full bg-gold/15 blur-3xl" />
-        <div className="relative mx-auto max-w-3xl px-5 lg:px-8 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] font-bold text-gold flex items-center justify-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-red-500 animate-blink" />
-            Iscrizioni in chiusura
-          </p>
-          <h2 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-balance">
-            Prenota il tuo posto alla{" "}
-            <span className="text-gold">masterclass gratuita</span>.
-          </h2>
-          <p className="mt-6 text-lg text-paper/75">
-            Le iscrizioni chiudono tra pochi giorni.
-          </p>
-
-          <div className="mt-10">
-            <Countdown targetDate={eventDate} variant="large" />
-          </div>
-
-          {submitted ? (
-            <div className="mt-12 rounded-3xl bg-paper text-ink p-10 border-2 border-gold">
-              <div className="text-5xl mb-4">🎉</div>
-              <h3 className="text-2xl font-bold">Thank you!</h3>
-              <p className="mt-3 text-ink/75">
-                You have successfully joined our subscriber list. Ci vediamo il 27 Aprile alle 21:00!
-              </p>
-            </div>
-          ) : (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!consent) return;
-                setSubmitted(true);
-              }}
-              className="mt-12 rounded-3xl bg-paper text-ink p-8 lg:p-10 border-2 border-paper/20 text-left space-y-5"
-            >
-              <div>
-                <label className="block text-xs uppercase tracking-[0.2em] font-bold text-ink/60 mb-2">
-                  Nome
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="w-full rounded-xl border-2 border-ink/15 px-4 py-3 text-base bg-cream/50 focus:outline-none focus:border-teal transition-colors"
-                  placeholder="Il tuo nome"
-                />
-              </div>
-              <div>
-                <label className="block text-xs uppercase tracking-[0.2em] font-bold text-ink/60 mb-2">
-                  Email
-                </label>
-                <input
-                  required
-                  type="email"
-                  className="w-full rounded-xl border-2 border-ink/15 px-4 py-3 text-base bg-cream/50 focus:outline-none focus:border-teal transition-colors"
-                  placeholder="latua@email.com"
-                />
-              </div>
-              <label className="flex items-start gap-3 text-sm text-ink/75 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={consent}
-                  onChange={(e) => setConsent(e.target.checked)}
-                  className="mt-1 h-4 w-4 accent-teal"
-                />
-                <span>
-                  Accetto di ricevere aggiornamenti relativi all'evento Live*
-                </span>
-              </label>
-              <button
-                type="submit"
-                disabled={!consent}
-                className="group w-full inline-flex items-center justify-center gap-3 rounded-full bg-teal text-paper px-8 py-5 text-base font-bold tracking-wide hover:bg-teal-deep transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                VOGLIO ISCRIVERMI
-                <span className="transition-transform group-hover:translate-x-1">→</span>
-              </button>
-              <p className="text-xs text-ink/55 text-center">
-                Puoi disiscriverti quando vuoi. Cliccando sul pulsante qui sopra, accetti la{" "}
-                <a
-                  href="https://www.iubenda.com/privacy-policy/54965772"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline hover:text-teal"
-                >
-                  Privacy Policy
-                </a>{" "}
-                del sito.
-              </p>
-            </form>
-          )}
         </div>
       </section>
 
