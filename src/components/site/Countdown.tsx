@@ -48,11 +48,11 @@ export function Countdown({
 
   if (variant === "large") {
     return (
-      <div className="flex items-center justify-center gap-3 sm:gap-6">
+      <div className="flex items-center justify-center gap-2 sm:gap-5">
         {items.map((it, i) => (
-          <div key={it.l} className="flex items-center gap-3 sm:gap-6">
+          <div key={it.l} className="flex items-center gap-2 sm:gap-5">
             <div className="flex flex-col items-center">
-              <span className={`font-display text-5xl sm:text-7xl font-black tabular-nums leading-none ${dark ? "text-paper" : "text-ink"}`}>
+              <span className={`font-display text-4xl sm:text-6xl font-black tabular-nums leading-none ${dark ? "text-paper" : "text-ink"}`}>
                 {String(it.v).padStart(2, "0")}
               </span>
               <span className={`mt-2 text-[10px] sm:text-xs uppercase tracking-[0.2em] ${dark ? "text-paper/60" : "text-muted-foreground"}`}>
@@ -60,7 +60,7 @@ export function Countdown({
               </span>
             </div>
             {i < items.length - 1 && (
-              <span className="font-display text-4xl sm:text-6xl text-gold animate-blink">:</span>
+              <span className="font-display text-3xl sm:text-5xl text-gold animate-blink">:</span>
             )}
           </div>
         ))}
@@ -69,11 +69,11 @@ export function Countdown({
   }
 
   return (
-    <div className="flex items-center gap-2 font-mono text-xs sm:text-sm tabular-nums">
+    <div className="flex items-center gap-1.5 font-mono text-[10px] sm:text-xs tabular-nums">
       {items.map((it, i) => (
-        <span key={it.l} className="flex items-baseline gap-1">
+        <span key={it.l} className="flex items-baseline gap-0.5">
           <span className={`font-bold ${dark ? "text-paper" : "text-ink"}`}>{String(it.v).padStart(2, "0")}</span>
-          <span className={`text-[10px] uppercase tracking-wider ${dark ? "text-paper/60" : "text-muted-foreground"}`}>
+          <span className={`text-[9px] uppercase tracking-wider ${dark ? "text-paper/60" : "text-muted-foreground"}`}>
             {it.l.slice(0, 1)}
           </span>
           {i < items.length - 1 && <span className={dark ? "text-paper/60" : "text-muted-foreground"}>:</span>}
